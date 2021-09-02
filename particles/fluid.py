@@ -35,8 +35,9 @@ class Fluid:
         self.vy += self.ay * dt
 
         # Gravitational forces
-        self.vx += GRAVITY_FORCE_HORIZONTAL * dt
-        self.vy += GRAVITY_FORCE_VERTICAL * dt
+        if GRAVITATIONAL_FORCES_ENABLED:
+            self.vx += GRAVITY_FORCE_HORIZONTAL * dt
+            self.vy += GRAVITY_FORCE_VERTICAL * dt
 
         if self.x > PARTICLE_WIDTH:
             if self.gx < GRID_COLS - 1 and self.grid[self.gx + 1][self.gy] is None:
