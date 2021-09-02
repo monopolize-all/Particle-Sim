@@ -65,7 +65,8 @@ def on_draw():
 
     particles_display_batch.draw()
 
-    fps_display.draw()
+    if SHOW_FPS:
+        fps_display.draw()
 
 
 pyglet.app.run()

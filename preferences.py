@@ -3,6 +3,7 @@ WINDOW_HEIGHT = 500
 WINDOW_TITLE = "Particle Sim"
 
 FPS = 60
+SHOW_FPS = True
 
 GRID_COLS = 25
 GRID_ROWS = 25
