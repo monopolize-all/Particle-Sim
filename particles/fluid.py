@@ -22,6 +22,7 @@ class Fluid:
 
     def delete(self):
         self.sprite.delete()
+        self.grid[self.gx][self.gy] = None
 
     def update(self, dt):
         self.update_kinematics(dt)
