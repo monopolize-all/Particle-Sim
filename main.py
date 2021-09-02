@@ -61,8 +61,8 @@ def on_mouse_press(x, y, button, modifiers):
         add_particle_to_grid(particle_class, grid_x, grid_y)
 
     elif button == pyglet.window.mouse.RIGHT:
-
-        grid[grid_x][grid_y].delete()
+        if grid[grid_x][grid_y] is not None:
+            grid[grid_x][grid_y].delete()
   
 
 @window.event
