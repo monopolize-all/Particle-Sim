@@ -20,6 +20,9 @@ class Fluid:
         self.vx = self.vy = 0
         self.ax = self.ay = 0
 
+    def delete(self):
+        self.sprite.delete()
+
     def update(self, dt):
         self.update_kinematics(dt)
         
