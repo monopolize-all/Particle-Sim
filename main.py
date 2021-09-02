@@ -38,6 +38,17 @@ def update_particles(dt):
 
 pyglet.clock.schedule_interval(update_particles, 1 / FPS)
 
+
+@window.event  
+def on_mouse_scroll(x, y, scroll_x, scroll_y):
+    nos_scrolled = int(scroll_y // MOUSE_SCROLL_SENSITIVITY)
+
+    particles.current_particle_index -= nos_scrolled
+
+    particles.current_particle_index = particles.current_particle_index % particles.number_of_particles
+
+    particles.get_current_particle()
+
 @window.event       
 def on_mouse_press(x, y, button, modifiers):
     x -= GRID_OFFSET_HORIZONTAL + GRID_PADDING_HORIZONTAL
@@ -57,13 +68,12 @@ def on_mouse_press(x, y, button, modifiers):
 
     if button == pyglet.window.mouse.LEFT:
 
-        particle_class = particles.fluid.Fluid
+        particle_class = particles.get_current_particle()
         add_particle_to_grid(particle_class, grid_x, grid_y)
 
     elif button == pyglet.window.mouse.RIGHT:
         if grid[grid_x][grid_y] is not None:
             grid[grid_x][grid_y].delete()
-  
 
 @window.event
 def on_draw():
