@@ -49,6 +49,7 @@ class Fluid:
             
             else:
                 self.x = PARTICLE_WIDTH
+                self.vx = 0
 
         elif self.x < 0:
             if self.gx > 0 and self.grid[self.gx - 1][self.gy] is None:
@@ -62,6 +63,7 @@ class Fluid:
 
             else:
                 self.x = 0
+                self.vx = 0
 
         if self.y > PARTICLE_HEIGHT:
             if self.gy < GRID_ROWS - 1 and self.grid[self.gx][self.gy + 1] is None:
@@ -75,6 +77,7 @@ class Fluid:
 
             else:
                 self.y = PARTICLE_HEIGHT
+                self.vy = 0
 
         elif self.y < 0:
             if self.gy > 0 and self.grid[self.gx][self.gy - 1] is None:
@@ -88,3 +91,4 @@ class Fluid:
 
             else:
                 self.y = 0
+                self.vy = 0
