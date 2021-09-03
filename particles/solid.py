@@ -45,7 +45,7 @@ class Solid:
         self.vy += self.ay * dt
 
         # Gravitational forces
-        if GRAVITATIONAL_FORCES_ENABLED:
+        if GRAVITATIONAL_FORCES_ENABLED and self.MASS:
             self.vx += GRAVITY_FORCE_HORIZONTAL * dt
             self.vy += GRAVITY_FORCE_VERTICAL * dt
 
