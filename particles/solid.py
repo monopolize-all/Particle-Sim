@@ -9,23 +9,33 @@ class Solid:
 
     BASE_COLOUR = (205, 185, 156)
     MASS = 1
+    PHYSICS_ENABLED = True
 
     def __init__(self, grid, sprite, position):
         self.grid = grid
         self.sprite = sprite
         self.gx, self.gy = position
 
-        self.x = 0.5
-        self.y = 0.5
-        self.vx = self.vy = 0
-        self.ax = self.ay = 0
+        self.grid.add_to_updates(self)
+
+        if self.PHYSICS_ENABLED:
+            self.x = 0.5
+            self.y = 0.5
+            self.vx = self.vy = 0
+            self.ax = self.ay = 0
 
     def delete(self):
         self.sprite.delete()
         self.grid[self.gx, self.gy] = None
 
     def update(self, dt):
-        self.update_kinematics(dt)
+        update_is_required = False
+
+        if self.PHYSICS_ENABLED:
+            self.update_kinematics(dt)
+            update_is_required = True
+
+        return update_is_required
         
     def update_kinematics(self, dt):
         self.x += self.vx * dt

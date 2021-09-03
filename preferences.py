@@ -41,6 +41,8 @@ PARTICLE_SELECTION_MENU_HEIGHT = GRID_HEIGHT
 
 # region ui
 PARTICLE_SELECTION_MENU_SCROLL_SENSITIVITY = 0.2  # Larger means less sensitive
+
+SCROLL_FOR_PARTICLE_MENU_ANYWHERE = True
 # endregion
 
 # region physics

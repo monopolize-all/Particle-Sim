@@ -23,7 +23,22 @@ class Grid:
 
         self.display_batch = pyglet.graphics.Batch()
 
+        self.particles_to_update = []
+
         self.add_borders()
+
+    def __setitem__(self, key, value):
+        x, y = key
+        self.matrix[x][y] = value
+
+    def __getitem__(self, key):
+        x, y = key
+        return self.matrix[x][y]
+
+    def __iter__(self):
+        for column in self.matrix:
+            for particle in column:
+                yield particle
 
     def add_borders(self):
         x1 = GRID_OFFSET_HORIZONTAL
@@ -43,18 +58,15 @@ class Grid:
         ui_elements.append(pyglet.shapes.Line(x1, y2, x2, y2, width = 1, 
                                         color = UI_BORDER_COLOUR, batch = ui_batch))
 
-    def __setitem__(self, key, value):
-        x, y = key
-        self.matrix[x][y] = value
+    def add_to_updates(self, particle):
+        if particle not in self.particles_to_update:
+            self.particles_to_update.append(particle)
 
-    def __getitem__(self, key):
-        x, y = key
-        return self.matrix[x][y]
-
-    def __iter__(self):
-        for column in self.matrix:
-            for particle in column:
-                yield particle
+    def update_particles(self, dt):
+        for index, particle in enumerate(self.particles_to_update):
+            if particle is not None:
+                if not particle.update(dt):
+                    self.particles_to_update.pop(index)
 
 grid = Grid()
 # endregion
@@ -181,12 +193,7 @@ def add_particle_to_grid(particle_class, grid_x, grid_y):
         grid[grid_x, grid_y] = particle
 
 
-def update_particles(dt):
-    for particle in grid:
-        if particle is not None:
-            particle.update(dt)
-
-pyglet.clock.schedule_interval(update_particles, 1 / FPS)
+pyglet.clock.schedule_interval(grid.update_particles, 1 / FPS)
 # endregion
 
 # region window events
@@ -219,7 +226,7 @@ def on_mouse_press(x, y, button, modifiers):
 @window.event
 def on_mouse_scroll(x, y, scroll_x, scroll_y):
     x1, y1, x2, y2 = particle_selection_menu.bounding_box
-    if x1 < x < x2 and y1 < y < y2:
+    if SCROLL_FOR_PARTICLE_MENU_ANYWHERE or (x1 < x < x2 and y1 < y < y2):
         particle_selection_menu.on_scroll(scroll_y, x, y)
 
 @window.event
